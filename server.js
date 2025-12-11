@@ -1,6 +1,6 @@
 const express = require('express');
 const axios = require('axios');
-const config = require ('config');
+const config = require ('./config');
 
 const app = express();
 
@@ -37,7 +37,7 @@ async function getAccessToken() {
   }
 
   // 检查API密钥是否已配置
-  if (!config.apiKey || !config.secretKey) {
+  if (!config.apiKey) {
     throw new Error('百度AI API密钥未配置，请检查环境变量');
   }
 
@@ -47,7 +47,7 @@ async function getAccessToken() {
       params: {
         grant_type: 'client_credentials',
         client_id: config.apiKey,
-        client_secret: config.secretKey
+        
       }
     });
 
@@ -226,8 +226,8 @@ const server = app.listen(config.port, () => {
   console.log('  POST /api/nlp/sentiment_classify - 情感分析');
   console.log('  POST /api/image-classify/advanced_general - 通用物体识别');
   console.log('\n⚠️  注意：');
-  if (!config.apiKey || !config.secretKey) {
-    console.log('  - 百度AI API密钥未配置，请在环境变量中设置BAIDU_API_KEY和BAIDU_SECRET_KEY');
+  if (!config.apiKey) {
+    console.log('  - 百度AI API密钥未配置，请在环境变量中设置BAIDU_API_KEY');
   } else {
     console.log('  - 百度AI API密钥已配置');
   }
