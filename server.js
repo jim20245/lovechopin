@@ -203,9 +203,6 @@ app.get('/api/info', (req, res) => {
   });
 });
 
-app.get('*', (req, res) => {
-  res.sendFile(path.join(_dirname, 'index.html'));
-});
 
 // 404错误处理
 app.use((req, res) => {
