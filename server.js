@@ -8,7 +8,7 @@ const app = express();
 // 中间件设置
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(_dirname));
+
 
 // 跨域支持
 app.use((req, res, next) => {
