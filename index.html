@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <meta
+            name="viewport"
+            content="width=device-width,initial-scale=1, shrink-to-fit=no"
+    />
+    <title>赵科宇</title>
+    <link rel="stylesheet" href="bootstrap.css"/>
+    <script src="jquery-3.3.1.slim.js"></script>
+    <script src="bootstrap.bundle.js"></script>
+    <script src="bootstrap.min.js"></script>
+    <!-- AI聊天组件 -->
+    <script src="ai-chat.js"></script>
+    <!--css文件已内联-->
+    <!--字体图标文件(使用CDN)-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <!--灯箱插件-->
+    
+    
+    
+    <style>
+        #div1 {
+            width: 100%;
+            height: 300px;
+            margin: 50px auto;
+            position: relative;
+            overflow: hidden;
+            border: 2px solid white;
+            background: linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)),
+                        url('goods.jpg');
+        }
+
+        #div1 ul {
+            height: 240px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            overflow: hidden;
+            background: linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)),
+                        url('goods.jpg');
+        }
+
+    body{
+            background: linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)),
+                        url('goods.jpg');
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="index.html"
+        ><img src="logo2.jpg" alt="" width="45"
+        /></a>
+        <button
+                class="navbar-toggler"
+                type="button"
+                data-toggle="collapse"
+                data-target="#navbarContent"
+        >
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="index.html">首页</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="page.html">教学瞬间</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="class.html">博客</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="product.html">商品</a>
+                </li>
+               
+                
+                <li class="nav-item user">
+                    <a class="nav-link" href="login.html">欢迎回来: <span id="user"></span> </a>
+                </li>
+                <li class="nav-item user exit">
+                    <a class="nav-link" href="login.html">退出</a>
+                </li>
+            </ul>
+           
+        </div>
+    </nav>
+
+    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+        </ol>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="100.jpg" class="d-block w-100" alt="...">
+            </div>
+        
+                
+            
+            
+        </div>
+
+    </div>
+    <div class="jumbotron">
+        <h1 class="display-4"> 赵科宇 </h1>
+        <p class="lead"> 挪威音乐学院，钢琴专业资深教师。中国音乐学院师资，自幼通过中国音乐学院钢琴十级。
+        </p>
+        <hr class="my-4">
+        <p>
+        
+        </p>
+        <a class="btn btn-primary btn-lg" href="#" role="button">jamydino</a>
+    </div>
+    
+    
+            
+                
+                    
+                
+            
+
+            
+        
+            
+        
+    
+        <div class="btn-box text-center mb-2">
+            <a href="javascript:void(0);" id="btn1" class="mr-5"
+            ><i class="fa fa-hand-o-left fa-2x"></i
+            ></a>
+            <a href="javascript:void(0);" id="btn2" class=""
+            ><i class="fa fa-hand-o-right fa-2x"></i
+            ></a>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+    // 从本地存储中获取数据
+    var user = localStorage.getItem('user')
+    // 如果 user 有数据 让 .user显示
+    if (user) {
+        $('.user').show()
+        if ($('#user').length) {
+            $('#user').html(user)
+        }
+    } else {
+        $('.user').hide()
+    }
+    $('.exit').click(function () {
+        localStorage.removeItem('user')
+        $('.user').hide()
+    })
+</script>
+
+
+    
+        
+
+    
+    
+        
+        
+        
+        
+    
+
+
+
+    
+        
+        
+        
+                
+                
+                
+            
+        
+
+<script>
+    window.onload = function () {
+        var oDiv = document.getElementById('div1')
+        var oUl = document.getElementById('ul1')
+        var oBtn1 = document.getElementById('btn1')
+        var oBtn2 = document.getElementById('btn2')
+        
+        // 检查元素是否存在，避免错误
+        if (!oDiv || !oUl || !oBtn1 || !oBtn2) {
+            console.log('部分元素未找到，轮播功能已跳过')
+            return
+        }
+        
+        var speed = 2 //初始化速度
+        var oLi = document.getElementsByTagName('li')
+        if (oLi.length > 0) {
+            oUl.innerHTML += oUl.innerHTML //图片内容*2
+            oUl.style.width = oLi.length * 160 + 'px' //设置ul的宽度使图片可以放下
+        }
+
+        function move() {
+            if (oUl.offsetLeft < -(oUl.offsetWidth / 2)) {
+                //向左滚动，当靠左的图4移出边框时
+                oUl.style.left = 0
+            }
+            if (oUl.offsetLeft > 0) {
+                //向右滚动，当靠右的图1移出边框时
+                oUl.style.left = -(oUl.offsetWidth / 2) + 'px'
+            }
+            oUl.style.left = oUl.offsetLeft + speed + 'px'
+        }
+
+        oBtn1.addEventListener(
+            'click',
+            function () {
+                speed = -2
+            },
+            false
+        )
+        oBtn2.addEventListener(
+            'click',
+            function () {
+                speed = 2
+            },
+            false
+        )
+        var timer = setInterval(move, 30) //全局变量 ，保存返回的定时器
+        // oDiv.addEventListener('mouseout', function () {
+        //     timer = setInterval(move,30);
+        // },false);
+        // oDiv.addEventListener('mousemove', function () {
+        //     clearInterval(timer);//鼠标移入清除定时器
+        // },false);
+    }
+</script>
+    <!-- 密码功能已移除 -->
+    
+
+    // 绑定了.swipebox类
+    jQuery(function ($) {
+        $('.swipebox').swipebox({
+            useCSS: true, // 不使用jQuery的动画效果。
+            useSVG: true, // 不对按钮使用png
+            initialIndexOnArray: 0, // 传递数组时初始化图像索引
+            hideCloseButtonOnMobile: false, // 显示移动设备上的关闭按钮
+            removeBarsOnMobile: true, // 在移动设备上不显示顶部栏
+            hideBarsDelay: 3000, // 隐藏信息条的延时时间为3秒
+            loopAtEnd: false, // 到达最后一个图像后不返回到第一个图像
+        })
+    })
+</script>
+</html>
