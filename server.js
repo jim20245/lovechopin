@@ -1,12 +1,14 @@
 const express = require('express');
 const axios = require('axios');
 const config = require ('./config');
+const path = require ('path');
 
 const app = express();
 
 // 中间件设置
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(express.static(_dirname));
 
 // 跨域支持
 app.use((req, res, next) => {
@@ -201,6 +203,10 @@ app.get('/api/info', (req, res) => {
   });
 });
 
+app.get('*', (req, res) => {
+  res.sendFile(path.join(_dirname, 'index.html'));
+});
+
 // 404错误处理
 app.use((req, res) => {
   res.status(404).json({ success: false, error: '接口不存在' });
@@ -211,6 +217,8 @@ app.use((err, req, res, next) => {
   console.error('全局错误:', err);
   res.status(500).json({ success: false, error: err.message || '服务器内部错误' });
 });
+
+
 
 // 启动服务器
 const server = app.listen(config.port, () => {
