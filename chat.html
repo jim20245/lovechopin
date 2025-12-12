@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI聊天窗口</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+        }
+        
+        .chat-container {
+            max-width: 500px;
+            margin: 50px auto;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        .chat-header {
+            background-color: #007bff;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        
+        .chat-messages {
+            padding: 15px;
+            height: 300px;
+            overflow-y: auto;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .message {
+            margin-bottom: 15px;
+            padding: 10px 15px;
+            border-radius: 18px;
+            max-width: 80%;
+            word-wrap: break-word;
+        }
+        
+        .user-message {
+            background-color: #007bff;
+            color: white;
+            margin-left: auto;
+        }
+        
+        .ai-message {
+            background-color: #f1f1f1;
+            color: #333;
+        }
+        
+        .chat-input-container {
+            padding: 15px;
+            display: flex;
+            gap: 10px;
+        }
+        
+        #userInput {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            font-size: 14px;
+            resize: none;
+        }
+        
+        #sendButton {
+            padding: 12px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            white-space: nowrap;
+        }
+        
+        #sendButton:hover {
+            background-color: #0056b3;
+        }
+        
+        .loading {
+            font-style: italic;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-header">AI聊天助手</div>
+        
+        <div id="chatMessages" class="chat-messages">
+            <div class="message ai-message">你好！我是AI助手，有什么可以帮你分析的吗？</div>
+        </div>
+        
+        <div class="chat-input-container">
+            <textarea id="userInput" placeholder="请输入内容..." rows="1"></textarea>
+            <button id="sendButton" onclick="sendMessage()">发送</button>
+        </div>
+    </div>
+
+    <script>
+        // 配置
+        const API_BASE_URL = 'https://lovechopin-production.up.railway.app';
+        const API_ENDPOINT = '/api/nlp/sentiment_classify';
+        
+        // DOM元素
+        const chatMessages = document.getElementById('chatMessages');
+        const userInput = document.getElementById('userInput');
+        const sendButton = document.getElementById('sendButton');
+        
+        // 初始化
+        document.addEventListener('DOMContentLoaded', () => {
+            // 回车键发送消息（支持Shift+Enter换行）
+            userInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    sendMessage();
+                }
+            });
+            
+            // 自动调整输入框高度
+            userInput.addEventListener('input', adjustTextareaHeight);
+        });
+        
+        // 调整文本框高度
+        function adjustTextareaHeight() {
+            userInput.style.height = 'auto';
+            userInput.style.height = Math.min(userInput.scrollHeight, 100) + 'px';
+        }
+        
+        // 发送消息
+        async function sendMessage() {
+            const message = userInput.value.trim();
+            
+            if (!message) return;
+            
+            // 添加用户消息到聊天记录
+            addMessageToChat(message, 'user');
+            
+            // 清空输入框
+            userInput.value = '';
+            adjustTextareaHeight();
+            
+            // 显示加载状态
+            const loadingMessage = addMessageToChat('正在分析...', 'ai', true);
+            
+            try {
+                // 发送请求到后端服务器
+                const response = await fetch(API_BASE_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ text: message })
+                });
+                
+                const data = await response.json();
+                
+                // 移除加载状态
+                chatMessages.removeChild(loadingMessage);
+                
+                // 处理响应
+                if (data.success && data.data.items) {
+                    const result = data.data.items[0];
+                    const sentiment = result.sentiment === 0 ? '负面' : result.sentiment === 1 ? '中性' : '正面';
+                    const reply = `📊 情感分析结果：
+• 情感倾向：${sentiment}
+• 置信度：${(result.confidence * 100).toFixed(1)}%
+• 正情感概率：${(result.positive_prob * 100).toFixed(1)}%
+• 负情感概率：${(result.negative_prob * 100).toFixed(1)}%`;
+                    
+                    addMessageToChat(reply, 'ai');
+                } else {
+                    addMessageToChat('分析失败：' + (data.error || '未知错误'), 'ai');
+                }
+            } catch (error) {
+                // 移除加载状态
+                chatMessages.removeChild(loadingMessage);
+                
+                // 显示错误信息
+                addMessageToChat('连接失败：' + error.message, 'ai');
+            }
+        }
+        
+        // 添加消息到聊天记录
+        function addMessageToChat(text, sender, isLoading = false) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}-message`;
+            
+            if (isLoading) {
+                messageDiv.classList.add('loading');
+            }
+            
+            messageDiv.textContent = text;
+            chatMessages.appendChild(messageDiv);
+            
+            // 滚动到底部
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            
+            return messageDiv;
+        }
+    </script>
+</body>
+</html>
