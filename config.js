@@ -12,7 +12,7 @@ module.exports = {
   secretKey: process.env.BAIDU_SECRET_KEY || '',
   
   // 百度AI API的基础URL
-  baseUrl: 'https://aip.baidubce.com',
+  baseUrl: 'https://QIANFAN.baidubce.com/v2/chat/completions',
   
   // 服务器端口（Railway会自动设置PORT环境变量）
   port: process.env.PORT || 3000,
@@ -42,3 +42,4 @@ module.exports = {
 //    - PORT: Railway会自动分配端口，无需手动设置
 
 // 5. 根据需要启用或禁用不同的AI服务
+
