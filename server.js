@@ -9,8 +9,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-const QIANFAN_CONFIG = {
-  BASE_URL: config.baseUrl,
+
 
 
 // 跨域支持
