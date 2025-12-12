@@ -94,7 +94,7 @@ async function callBaiduAI(endpoint, params, method = 'POST', data = null) {
 }
 
 // 示例API接口：文本识别（通用文字识别）
-app.post('/api/ocr/general_basic', async (req, res) => {
+app.post('/chat', async (req, res) => {
   try {
     const { image, language_type, detect_direction, detect_language, vertexes_location, probability } = req.body;
     
