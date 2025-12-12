@@ -4,6 +4,8 @@ const config = require ('./config');
 const path = require ('path');
 
 const app = express();
+app.use (express.static(path.join(_dirname,'..')));
+
 
 // 中间件设置
 app.use(express.json());
