@@ -228,7 +228,7 @@ const server = app.listen(config.port, () => {
   console.log('  GET  /health - 健康检查（Railway使用）');
   console.log('  GET  /api/health - 健康检查');
   console.log('  GET  /api/info - 服务器信息');
-  console.log('  POST /api/ocr/general_basic - 通用文字识别');
+  console.log('  POST /chat - 通用文字识别');
   console.log('  POST /api/tts - 语音合成');
   console.log('  POST /api/nlp/sentiment_classify - 情感分析');
   console.log('  POST /api/image-classify/advanced_general - 通用物体识别');
