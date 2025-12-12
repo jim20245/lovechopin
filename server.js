@@ -147,7 +147,7 @@ app.post('/api/tts', async (req, res) => {
 });
 
 // 示例API接口：自然语言处理（情感分析）
-app.post('/api/nlp/sentiment_classify', async (req, res) => {
+app.post('/chat', async (req, res) => {
   try {
     const { text } = req.body;
     
