@@ -32,7 +32,7 @@ app.use((req, res, next) => {
 });
 
 // 存储访问令牌的变量
-let accessToken = '';
+let accessToken = 'Bearer BAIDU_API_KEY';
 let tokenExpiry = Date.now();
 
 // 获取百度AI API访问令牌
