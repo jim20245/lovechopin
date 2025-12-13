@@ -149,15 +149,15 @@ app.post('/api/tts', async (req, res) => {
 // 示例API接口：自然语言处理（情感分析）
 app.post('/chat', async (req, res) => {
   try {
-    const { text } = req.body;
+    const { message } = req.body;
     
     // 验证必要参数
-    if (!text) {
+    if (!message) {
       return res.status(400).json({ success: false, error: '缺少必要参数：text' });
     }
     
     const result = await callBaiduAI(config.services.nlp + '/sentiment_classify', {
-      text
+      message
     });
     
     res.json({ success: true, data: result });
