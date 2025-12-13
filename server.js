@@ -96,17 +96,17 @@ async function callBaiduAI(endpoint, params, method = 'POST', data = null) {
 }
 
 // 示例API接口：文本识别（通用文字识别）
-app.post('/api', async (req, res) => {
+app.post('/chat', async (req, res) => {
   try {
-    const { image, language_type, detect_direction, detect_language, vertexes_location, probability } = req.body;
+    const { message, language_type, detect_direction, detect_language, vertexes_location, probability } = req.body;
     
     // 验证必要参数
-    if (!image) {
+    if (!message) {
       return res.status(400).json({ success: false, error: '缺少必要参数：image' });
     }
     
     const result = await callBaiduAI(config.services.ocr + '/general_basic', {
-      image,
+      message,
       language_type: language_type || 'CHN_ENG',
       detect_direction: detect_direction || 'false',
       detect_language: detect_language || 'false',
@@ -147,7 +147,7 @@ app.post('/api/tts', async (req, res) => {
 });
 
 // 示例API接口：自然语言处理（情感分析）
-app.post('/chat', async (req, res) => {
+app.post('/api', async (req, res) => {
   try {
     const { message } = req.body;
     
