@@ -70,7 +70,7 @@ async function getAccessToken() {
 }
 
 // 通用的百度AI API调用函数
-async function callBaiduAI(endpoint, params, method = 'POST', data = null) {
+async function callBaiduAI(endpoint, params, method = 'GET', data = null) {
   try {
     const token = await getAccessToken();
     const url = `${config.baseUrl}${endpoint}?access_token=${token}`;
