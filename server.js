@@ -156,7 +156,7 @@ app.post('/chat', async (req, res) => {
       return res.status(400).json({ success: false, error: '缺少必要参数：text' });
     }
     
-    const result = await callBaiduAI(http://120.48.71.34:18789/chat', {
+    const result = await callBaiduAI(config.services.nlp+http://120.48.71.34:18789/chat', {
       message
     });
     
