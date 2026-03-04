@@ -105,7 +105,7 @@ app.post('/chat', async (req, res) => {
       return res.status(400).json({ success: false, error: '缺少必要参数：image' });
     }
     
-    const result = await callBaiduAI(config.baseUrl, {
+    const result = await callBaiduAI(config.services.nlp, {
       message,
       language_type: language_type || 'CHN_ENG',
       detect_direction: detect_direction || 'false',
