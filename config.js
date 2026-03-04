@@ -26,7 +26,7 @@ module.exports = {
     // 语音合成
     tts: '/rest/2.0/tts/v1',
     // 自然语言处理
-    nlp:'chat',
+    nlp:'/chat',
     // 图像识别
     imageClassify: '/rest/2.0/image-classify/v1'
   }
@@ -42,6 +42,7 @@ module.exports = {
 //    - PORT: Railway会自动分配端口，无需手动设置
 
 // 5. 根据需要启用或禁用不同的AI服务
+
 
 
 
