@@ -96,7 +96,7 @@ async function callBaiduAI(endpoint, params, method = 'POST', data = null) {
 }
 
 // 示例API接口：文本识别（通用文字识别）
-app.post('/api', async (req, res) => {
+app.post('/chat', async (req, res) => {
   try {
     const { message, language_type, detect_direction, detect_language, vertexes_location, probability } = req.body;
     
@@ -147,7 +147,7 @@ app.post('/api/tts', async (req, res) => {
 });
 
 // 示例API接口：自然语言处理（情感分析）
-app.post('/chat', async (req, res) => {
+app.post('/api', async (req, res) => {
   try {
     const { message } = req.body;
     
@@ -156,7 +156,7 @@ app.post('/chat', async (req, res) => {
       return res.status(400).json({ success: false, error: '缺少必要参数：text' });
     }
     
-    const result = await callBaiduAI(config.baseUrl', {
+    const result = await callBaiduAI(config.services.nlp+'/sentiment-classify', {
       message
     });
     
