@@ -228,7 +228,7 @@ wss.on('connection', (ws) => {
 
 // 新增：给树莓派发指令的接口
 app.post('/api/dino/command', express.json(), (req, res) => {
-  const { deviceId, action, motor, duration } = req.body;
+  const { deviceId, action, motor, duration, value } = req.body;
   
   if (!deviceId) {
     return res.status(400).json({ error: '缺少 deviceId' });
@@ -240,7 +240,7 @@ app.post('/api/dino/command', express.json(), (req, res) => {
   }
   
   try {
-    device.send(JSON.stringify({ action, motor, duration }));
+    device.send(JSON.stringify({ action, motor, duration, value }));
     res.json({ 
       success: true, 
       message: '指令已发送',
