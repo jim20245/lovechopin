@@ -289,9 +289,9 @@ app.use((err, req, res, next) => {
 // ===== 修改启动方式（用 server 而不是 app.listen） =====
 const PORT = config.port || 3000;
 
-server.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0',() => {
   console.log('\n🚀 百度AI服务器 + 树莓派中转站已启动');
-  console.log(`📡 服务器地址: http://localhost:${PORT}`);
+  console.log(`Server running on port ${PORT}`);
   console.log('🔧 环境:', process.env.NODE_ENV || 'development');
   
   console.log('\n📋 你原有的百度AI接口：');
